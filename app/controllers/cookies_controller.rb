@@ -1,5 +1,6 @@
 class CookiesController < ApplicationController
   before_action :authenticate_user!
+  after_action :cook_cookie, only: [:create]
 
   def new
     @oven = current_user.ovens.find_by!(id: params[:oven_id])
@@ -20,5 +21,9 @@ class CookiesController < ApplicationController
 
   def cookie_params
     params.require(:cookie).permit(:fillings)
+  end
+
+  def cook_cookie
+    BakerJob.perform_later(@cookie.id)
   end
 end
