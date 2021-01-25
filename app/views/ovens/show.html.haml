@@ -3,10 +3,12 @@
 .cookie-info
   Cookie in oven:
   - if @oven.cookie
-    1 cookie with #{@oven.cookie.fillings.present? || "no fillings"}
+    1 cookie with #{cookie_fillings_message(@oven.cookie)}
     - if @oven.cookie.ready?
       (Your Cookie is Ready)
       = button_to "Retrieve Cookie", empty_oven_path, class: 'button tiny'
+    - else
+      (status: #{@oven.cookie.status})  
   - else
     None
   = link_to "Prepare Cookie", new_oven_cookies_path(@oven), class: 'button prepare'
