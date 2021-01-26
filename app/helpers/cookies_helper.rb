@@ -1,5 +1,5 @@
 module CookiesHelper
   def cookie_fillings_message(cookie)
-    cookie.fillings.present? ? @oven.cookie.fillings : 'no fillings'
+    cookie.fillings.present? ? cookie.fillings : 'no fillings'
   end
 end

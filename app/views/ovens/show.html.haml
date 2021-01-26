@@ -2,13 +2,15 @@
 
 .cookie-info
   Cookie in oven:
-  - if @oven.cookie
-    1 cookie with #{cookie_fillings_message(@oven.cookie)}
-    - if @oven.cookie.ready?
-      (Your Cookie is Ready)
-      = button_to "Retrieve Cookie", empty_oven_path, class: 'button tiny'
-    - else
-      (status: #{@oven.cookie.status})  
+  - if @oven.cookies
+    - @oven.cookies.each do |cookie|
+      .row
+        1 cookie with #{cookie_fillings_message(cookie)}
+        - if cookie.ready?
+          (Your Cookie is Ready)
+        - else
+          (status: #{cookie.status})  
+    = button_to "Retrieve Cookie", empty_oven_path, class: 'button tiny'
   - else
     None
   = link_to "Prepare Cookie", new_oven_cookies_path(@oven), class: 'button prepare'
