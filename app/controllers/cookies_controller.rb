@@ -14,10 +14,9 @@ class CookiesController < ApplicationController
     @oven = current_user.ovens.find_by!(id: params[:oven_id])
     
     params[:quantity].to_i.times do
-      cookie = @oven.cookies.create!(cookie_params)
-      BakerJob.perform_later(cookie.id) if cookie.present?
+      @oven.cookies.create!(cookie_params)
     end
-    
+    BakerJob.perform_later(@oven.cookies.ids) if @oven.cookies.any?
     redirect_to oven_path(@oven)
   end
 

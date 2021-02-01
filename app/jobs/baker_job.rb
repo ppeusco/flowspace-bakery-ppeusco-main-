@@ -1,9 +1,10 @@
 class BakerJob < ApplicationJob
   queue_as :default
 
-  def perform(cookie_id)
-    sleep(30)
-    cookie = Cookie.find_by(id: cookie_id)
-    cookie&.update(status: 'cooked')
+  def perform(cookies_id)
+    sleep(60)
+    cookies = Cookie.where(id: cookies_id)
+    cookies&.update_all(status: 'cooked')
+    ActionCable.server.broadcast 'cookiestatus_channel', status: '(Your Cookie(s) is Ready)', id: cookies.first.storage_id
   end
 end
