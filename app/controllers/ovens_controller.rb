@@ -14,7 +14,7 @@ class OvensController < ApplicationController
     if @oven.cookies.present?
       @oven.cookies.each do |cookie|
         cookie.update_attributes!(storage: current_user)
-      end  
+      end
     end
     redirect_to @oven, alert: 'Oven emptied!'
   end

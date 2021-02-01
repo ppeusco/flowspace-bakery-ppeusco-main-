@@ -1,15 +1,15 @@
 %h3= @oven.name
 
 .cookie-info
-  Cookie in oven:
-  - if @oven.cookies
-    - @oven.cookies.each do |cookie|
-      .row
-        1 cookie with #{cookie_fillings_message(cookie)}
-        - if cookie.ready?
-          (Your Cookie is Ready)
-        - else
-          (status: #{cookie.status})  
+  Cookie(s) in oven:
+  - if @oven.cookies.present?
+    - @cookie = @oven.cookies.first
+    #{@oven.cookies.count} cookie(s) with #{cookie_fillings_message(@cookie)}
+    - if @oven.cookies.first.ready?
+      (Your Cookie is Ready)
+    - else
+      .oven_status{ :id => "oven_status_#{@oven.id}" }
+        (status: #{@cookie.status}) 
     = button_to "Retrieve Cookie", empty_oven_path, class: 'button tiny'
   - else
     None
